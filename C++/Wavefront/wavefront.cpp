@@ -1,11 +1,13 @@
 
 #include "Wavefront/wavefront.hpp"
 
-void __attach(void) __attribute__((constructor));
-void __detach(void) __attribute__((destructor));
+void __attachWavefront(void) __attribute__((constructor));
+void __detachWavefront(void) __attribute__((destructor));
 
-void __attach(void)
+void __attachWavefront(void)
 {
+    static bool initialized = false;
+    if ( ! initialized ) {
     std::cout << "Attaching Wavefront library" << std::endl;
     ResourceHolder::RegisterImplementation < WavefrontMaterial, Assets::Material > ( "WavefrontMaterial" );
 
@@ -19,9 +21,11 @@ void __attach(void)
             ResourceHolder::RegisterLoader < Assets::Mesh, WavefrontLoaderOBJ > ( type );
         }
     }
+    initialized = true;
+    }
 }
 
-void __detach(void)
+void __detachWavefront(void)
 {
     std::cout << "Detaching Wavefront library" << std::endl;
 }

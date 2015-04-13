@@ -2,10 +2,10 @@
 
 #include "Assets/assets.hpp"
 
-void __attach(void) __attribute__((constructor));
-void __detach(void) __attribute__((destructor));
+void __attachAssets(void) __attribute__((constructor));
+void __detachAssets(void) __attribute__((destructor));
 
-void __attach(void)
+void __attachAssets(void)
 {
     static bool initialized = false;
     if ( ! initialized ) {
@@ -24,7 +24,7 @@ void __attach(void)
     }
 }
 
-void __detach(void)
+void __detachAssets(void)
 {
     std::cout << "Detaching Assets library" << std::endl;
 }

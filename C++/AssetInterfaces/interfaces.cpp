@@ -1,14 +1,14 @@
 #include "AssetInterfaces/interfaces.hpp"
 
-void __attach(void) __attribute__((constructor));
-void __detach(void) __attribute__((destructor));
+void __attachInterfaces(void) __attribute__((constructor));
+void __detachInterfaces(void) __attribute__((destructor));
 
-void __attach(void)
+void __attachInterfaces(void)
 {
     std::cout << "Attaching AssetInterfaces library" << std::endl;
 }
 
-void __detach(void)
+void __detachInterfaces(void)
 {
     std::cout << "Detaching AssetInterfaces library" << std::endl;
 }

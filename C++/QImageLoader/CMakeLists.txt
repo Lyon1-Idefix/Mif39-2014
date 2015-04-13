@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 
 project ( QImageLoader CXX )
 file ( GLOB_RECURSE SRC *.?pp )
-add_library(QImageLoader SHARED "${SRC}")
+add_library(QImageLoader SHARED ${SRC})
 target_link_libraries(QImageLoader Qt5::Core)
 target_link_libraries(QImageLoader Qt5::Gui)
 target_link_libraries(QImageLoader Utility)

@@ -27,11 +27,13 @@ SharedResourceList QImageLoader::__load ( FileDescriptor filename ) {
     return result;
 }
 
-void __attach(void) __attribute__((constructor));
-void __detach(void) __attribute__((destructor));
+void __attachQImage(void) __attribute__((constructor));
+void __detachQImage(void) __attribute__((destructor));
 
-void __attach(void)
+void __attachQImage(void)
 {
+    static bool initialized = false;
+    if ( ! initialized ) {
     std::cout << "Attaching QImageLoader library" << std::endl;
     std::cout << "Initialize QImage Loaders" << std::endl;
     QMimeDatabase db;
@@ -43,9 +45,11 @@ void __attach(void)
                 }
         }
     }
+    initialized = true;
+    }
 }
 
-void __detach(void)
+void __detachQImage(void)
 {
     std::cout << "Detaching QImageLoader library" << std::endl;
 }

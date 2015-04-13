@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 
 project ( Assets CXX )
 file ( GLOB_RECURSE SRC *.?pp )
-add_library(Assets SHARED "${SRC}")
+add_library(Assets SHARED ${SRC})
 target_link_libraries(Assets Qt5::Core)
 target_link_libraries(Assets Qt5::Gui)
 target_link_libraries(Assets Utility)

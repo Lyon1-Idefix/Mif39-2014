@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 2.8)
 
 project ( SimpleAssetClient CXX )
 file ( GLOB_RECURSE SRC *.?pp )
-add_executable(SimpleAssetClient "${SRC}")
+add_executable(SimpleAssetClient ${SRC})
 target_link_libraries(SimpleAssetClient Qt5::Core)
 target_link_libraries(SimpleAssetClient Qt5::Gui)
 target_link_libraries(SimpleAssetClient Utility)

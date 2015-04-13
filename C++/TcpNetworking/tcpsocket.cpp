@@ -64,7 +64,7 @@ void TcpSocket::openServer(int port)
 QUuid TcpSocket::acceptConnectionFromClient()
 {
     QUuid fake;
-    if( mSocket != -1 ) return fake;
+    if( mSocket == -1 ) return fake;
     if ( mMode != CommunicationPolicy::Server ) return fake;
     struct sockaddr_in m_addr;
     int addr_length;

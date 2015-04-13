@@ -41,7 +41,11 @@ public:
     virtual bool receive ( ByteBuffer& buffer ) = 0;
 protected:
     ConnectionEndPoint(Options options) :
-        ConnectionStream < SocketPolicy > ( options ) {}
+        ConnectionStream < SocketPolicy > ( options ),
+        mEndPointOptions ( options )
+    {
+        std::cout << __FUNCTION__ << "::" << __LINE__ << "[" << options.serverIP.toStdString() << "]" << std::endl;
+    }
     Options mEndPointOptions;
 };
 
@@ -66,7 +70,8 @@ public:
     virtual bool receive ( QUuid client, ByteBuffer& buffer ) = 0;
 protected:
     ConnectionStartPoint(Options options) :
-        ConnectionStream < SocketPolicy > ( options ) {}
+        ConnectionStream < SocketPolicy > ( options ),
+        mStartPointOptions ( options ) {}
     Options mStartPointOptions;
 };
 
