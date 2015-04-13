@@ -1,0 +1,13 @@
+cmake_minimum_required(VERSION 2.8)
+
+project ( WavefrontTest CXX )
+file ( GLOB_RECURSE SRC *.?pp )
+add_executable(WavefrontTest "${SRC}")
+target_link_libraries(WavefrontTest Qt5::Core)
+target_link_libraries(WavefrontTest Qt5::Gui)
+target_link_libraries(WavefrontTest Utility)
+target_link_libraries(WavefrontTest AssetInterfaces)
+target_link_libraries(WavefrontTest AssetGenerics)
+target_link_libraries(WavefrontTest Assets)
+target_link_libraries(WavefrontTest Wavefront)
+target_link_libraries(WavefrontTest QImageLoader)
