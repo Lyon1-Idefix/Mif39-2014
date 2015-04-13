@@ -8,6 +8,7 @@
 #include "Assets/Image.hpp"
 #include "Assets/Material.hpp"
 #include "Assets/Mesh.hpp"
+#include "Assets/behaviour.hpp"
 
 #endif // ASSETS_HPP
 

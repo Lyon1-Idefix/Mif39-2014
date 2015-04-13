@@ -1,7 +1,7 @@
 #ifndef DATA_MATERIAL_HPP
 #define DATA_MATERIAL_HPP
-
 #include "Utility/utility.hpp"
+
 #include "AssetInterfaces/interfaces.hpp"
 #include "AssetGenerics/generics.hpp"
 
@@ -12,11 +12,11 @@ namespace Assets {
 
 class Material;
 class MaterialLoader;
-class MaterialLibrary;
+class MaterialManager;
 
 typedef QSharedPointer < Material > MaterialPtr;
 typedef QSharedPointer < MaterialLoader > MaterialLoaderPtr;
-typedef QSharedPointer < MaterialLibrary > MaterialLibraryPtr;
+typedef QSharedPointer < MaterialManager > MaterialManagerPtr;
 
 typedef QList < QSharedPointer < Material > > MaterialList;
 

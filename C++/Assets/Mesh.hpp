@@ -40,7 +40,7 @@ class Mesh :
 public:
     virtual ~Mesh ();
     virtual void Usage ();
-public://rotected:
+protected:
     Mesh ();
     Mesh (QString name);
     virtual void _createAttributes ();
