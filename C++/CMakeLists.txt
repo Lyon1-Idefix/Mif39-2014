@@ -20,7 +20,11 @@ add_subdirectory(TcpNetworking)
 add_subdirectory(AssetInterfaces)
 add_subdirectory(AssetGenerics)
 add_subdirectory(Assets)
+
 add_subdirectory(Wavefront)
+
+add_subdirectory(FuzzyLogicBehaviour)
+
 add_subdirectory(QImageLoader)
 
 add_subdirectory(Samples)

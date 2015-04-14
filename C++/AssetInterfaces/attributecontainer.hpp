@@ -44,6 +44,10 @@ public:
     template < class AttributeType > unsigned int getSize ( QString name ) const {
         return ( mAttributes [ name ] )->getSize < AttributeType > ();
     }
+    //
+    template < class AttributeType > QList < QString > getKeys ( QString name ) const {
+        return ( mAttributes [ name ] )->getKeys < AttributeType > ();
+    }
 protected:
     AttributeContainer ();
     template < class AttributeType > void addAttribute ( QString name, const AttributeType& value ) {

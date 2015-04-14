@@ -26,6 +26,7 @@ public:
     template <class AttributeType> const AttributeType& getValue (QString name) const;
     //
     template <class AttributeType> unsigned int getSize () const;
+    template < class AttributeType > QList < QString > getKeys () const;
 protected:
     IResourceAttribute (QString name) {
         HasName::Initialize(name);
@@ -187,6 +188,15 @@ template <class AttributeType> unsigned int IResourceAttribute::getSize () const
         if ( tmp != NULL ) return tmp->getSize();
     }
     return -1;
+}
+
+template < class AttributeType > QList < QString > IResourceAttribute::getKeys () const {
+    QList < QString > fake;
+    {
+        const ResourceNamedAttribute < AttributeType >* tmp = dynamic_cast < const ResourceNamedAttribute < AttributeType >* > ( this );
+        if ( tmp != NULL ) return tmp->keys();
+    }
+    return fake;
 }
 
 ////////////////////////////////////////////////////////////
