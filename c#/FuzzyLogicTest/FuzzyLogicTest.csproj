@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{AC5CD90D-63F5-4041-8FF8-FBA089442997}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>FuzzyLogicTest</RootNamespace>
+    <AssemblyName>FuzzyLogicTest</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>True</Externalconsole>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <Externalconsole>True</Externalconsole>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Main.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\FuzzyLogicEngine\FuzzyLogic.csproj">
+      <Project>{77ADB608-2388-4762-A518-413D9FA1DEAB}</Project>
+      <Name>FuzzyLogic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\DesignPatterns\DesignPatterns.csproj">
+      <Project>{6BA28740-37EB-4321-B004-C1A074BDC973}</Project>
+      <Name>DesignPatterns</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\FuzzyLogicSolver\FuzzyLogicSolver.csproj">
+      <Project>{941DA046-2008-4BAE-8DF4-B017EA100FD1}</Project>
+      <Name>FuzzyLogicSolver</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>

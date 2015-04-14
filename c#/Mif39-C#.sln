@@ -1,0 +1,38 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuzzyLogic", "FuzzyLogicEngine\FuzzyLogic.csproj", "{77ADB608-2388-4762-A518-413D9FA1DEAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuzzyLogicTest", "FuzzyLogicTest\FuzzyLogicTest.csproj", "{AC5CD90D-63F5-4041-8FF8-FBA089442997}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesignPatterns", "DesignPatterns\DesignPatterns.csproj", "{6BA28740-37EB-4321-B004-C1A074BDC973}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FuzzyLogicSolver", "FuzzyLogicSolver\FuzzyLogicSolver.csproj", "{941DA046-2008-4BAE-8DF4-B017EA100FD1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6BA28740-37EB-4321-B004-C1A074BDC973}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6BA28740-37EB-4321-B004-C1A074BDC973}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6BA28740-37EB-4321-B004-C1A074BDC973}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6BA28740-37EB-4321-B004-C1A074BDC973}.Release|Any CPU.Build.0 = Release|Any CPU
+		{77ADB608-2388-4762-A518-413D9FA1DEAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77ADB608-2388-4762-A518-413D9FA1DEAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77ADB608-2388-4762-A518-413D9FA1DEAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77ADB608-2388-4762-A518-413D9FA1DEAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{941DA046-2008-4BAE-8DF4-B017EA100FD1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{941DA046-2008-4BAE-8DF4-B017EA100FD1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{941DA046-2008-4BAE-8DF4-B017EA100FD1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{941DA046-2008-4BAE-8DF4-B017EA100FD1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC5CD90D-63F5-4041-8FF8-FBA089442997}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC5CD90D-63F5-4041-8FF8-FBA089442997}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC5CD90D-63F5-4041-8FF8-FBA089442997}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC5CD90D-63F5-4041-8FF8-FBA089442997}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(MonoDevelopProperties) = preSolution
+		StartupItem = FuzzyLogicTest\FuzzyLogicTest.csproj
+	EndGlobalSection
+EndGlobal

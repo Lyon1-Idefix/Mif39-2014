@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{77ADB608-2388-4762-A518-413D9FA1DEAB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>FuzzyLogic</RootNamespace>
+    <AssemblyName>FuzzyLogic</AssemblyName>
+    <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>True</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>False</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>none</DebugType>
+    <Optimize>True</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>False</ConsolePause>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="System.Xml" />
+    <Reference Include="System.Runtime.Serialization" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="Object.cs" />
+    <Compile Include="Variable\Variable.cs" />
+    <Compile Include="Variable\InputVariable.cs" />
+    <Compile Include="Variable\OutputVariable.cs" />
+    <Compile Include="Rule\Expression.cs" />
+    <Compile Include="Rule\Proposition.cs" />
+    <Compile Include="Rule\Operator.cs" />
+    <Compile Include="Rule\Antecedent.cs" />
+    <Compile Include="Rule\Consequent.cs" />
+    <Compile Include="Rule\Rule.cs" />
+    <Compile Include="Rule\RuleBlock.cs" />
+    <Compile Include="Engine.cs" />
+    <Compile Include="Term\Keyframe.cs" />
+    <Compile Include="Term\Curve.cs" />
+    <Compile Include="Iterators\ObjectList.cs" />
+    <Compile Include="Iterators\ObjectIterator.cs" />
+    <Compile Include="Iterators\IndexedReader.cs" />
+    <Compile Include="NamedObject.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <Folder Include="Variable\" />
+    <Folder Include="Rule\" />
+    <Folder Include="Term\" />
+    <Folder Include="Samples\" />
+    <Folder Include="Iterators\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DesignPatterns\DesignPatterns.csproj">
+      <Project>{6BA28740-37EB-4321-B004-C1A074BDC973}</Project>
+      <Name>DesignPatterns</Name>
+    </ProjectReference>
+  </ItemGroup>
+</Project>
