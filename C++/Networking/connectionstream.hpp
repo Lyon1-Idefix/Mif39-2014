@@ -39,12 +39,12 @@ public:
     virtual bool isConnected () = 0;
     virtual bool send ( const ByteBuffer& buffer ) = 0;
     virtual bool receive ( ByteBuffer& buffer ) = 0;
+    virtual bool dataAvailable () = 0;
 protected:
     ConnectionEndPoint(Options options) :
         ConnectionStream < SocketPolicy > ( options ),
         mEndPointOptions ( options )
     {
-        std::cout << __FUNCTION__ << "::" << __LINE__ << "[" << options.serverIP.toStdString() << "]" << std::endl;
     }
     Options mEndPointOptions;
 };
@@ -58,6 +58,7 @@ public:
     public:
         unsigned int maximumConnectedClients;
         unsigned int flags;
+        DisconnectedCallback* cbDisconnect;
     };
     virtual ~ConnectionStartPoint() {}
     virtual bool start () = 0;
@@ -68,6 +69,7 @@ public:
     virtual bool send ( const ByteBuffer& buffer ) = 0;
     virtual bool send ( QUuid client, const ByteBuffer& buffer ) = 0;
     virtual bool receive ( QUuid client, ByteBuffer& buffer ) = 0;
+    virtual bool dataAvailable ( QUuid client ) = 0;
 protected:
     ConnectionStartPoint(Options options) :
         ConnectionStream < SocketPolicy > ( options ),

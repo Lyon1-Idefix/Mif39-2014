@@ -9,6 +9,7 @@
 #include "Assets/Material.hpp"
 #include "Assets/Mesh.hpp"
 #include "Assets/behaviour.hpp"
+#include "Assets/gameentity.hpp"
 
 #endif // ASSETS_HPP
 

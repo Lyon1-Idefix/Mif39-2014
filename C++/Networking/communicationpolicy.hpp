@@ -3,6 +3,8 @@
 
 #include "Utility/utility.hpp"
 
+typedef void (DisconnectedCallback) ( QUuid client );
+
 class CommunicationPolicy
 {
 public:
@@ -14,7 +16,9 @@ public:
     virtual QUuid acceptConnectionFromClient() = 0;
     virtual int sendData( QUuid client, const unsigned char* message, const unsigned int length) = 0;
     virtual int receiveData( QUuid client, unsigned char* message, const unsigned int length) = 0;
+    virtual bool dataAvailable (QUuid client) = 0;
     inline bool hasEndPoint () { return mEndPoints.size () > 0; }
+    virtual void cleanUp (DisconnectedCallback* cbDisconnect) = 0;
     //
     // Client dedicated methods
     //
@@ -25,6 +29,7 @@ public:
     //
     virtual void closeConnection() = 0;
     virtual int sendData( const unsigned char* message, const unsigned int length) = 0;
+    virtual bool dataAvailable () = 0;
     virtual bool isValid () = 0;
 protected:
     CommunicationPolicy ();
@@ -32,7 +37,8 @@ protected:
         None,
         Client,
         Server,
-        EndPoint
+        EndPoint,
+        Erroneous
     } mMode;
     QMap < QUuid, CommunicationPolicy* > mEndPoints;
 };

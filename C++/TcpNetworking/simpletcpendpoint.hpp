@@ -15,6 +15,7 @@ public:
     virtual bool isConnected ();
     virtual bool send ( const ByteBuffer& buffer );
     virtual bool receive ( ByteBuffer& buffer );
+    virtual bool dataAvailable ();
 };
 
 #endif // SIMPLETCPENDPOINT_H

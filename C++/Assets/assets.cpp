@@ -17,6 +17,7 @@ void __attachAssets(void)
         ResourceHolder::RegisterInterface < Assets::Material, Assets::MaterialManager > ( "Material" );
         ResourceHolder::RegisterInterface < Assets::Mesh, Assets::MeshManager > ( "Mesh" );
         ResourceHolder::RegisterInterface < Assets::Behaviour, Assets::BehaviourManager > ( "Behaviour" );
+        ResourceHolder::RegisterInterface < Assets::Behaviour, Assets::BehaviourManager > ( "GameEntity" );
 
         std::cout << "Initialize Implementation Resource" << std::endl;
         ResourceHolder::RegisterImplementation < Assets::Image, Assets::Image > ( "Image" );

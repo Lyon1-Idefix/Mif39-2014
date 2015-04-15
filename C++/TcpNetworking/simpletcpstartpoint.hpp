@@ -18,6 +18,7 @@ public:
     virtual bool send ( const ByteBuffer& buffer );
     virtual bool send ( QUuid client, const ByteBuffer& buffer );
     virtual bool receive ( QUuid client, ByteBuffer& buffer );
+    virtual bool dataAvailable ( QUuid client );
 };
 
 #endif // SIMPLETCPSTARTPOINT_H
