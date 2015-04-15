@@ -13,7 +13,7 @@ QImageLoader::~QImageLoader()
 
 SharedResourceList QImageLoader::__load ( FileDescriptor filename ) {
     SharedResourceList result;
-    Assets::ImagePtr image = ResourceHolder::CreateByName ( "Image", filename.fullFilename ).dynamicCast < Assets::Image > ();
+    Assets::ImagePtr image = ResourceHolder::CreateByName ( "Image", filename.fileBasename + "." + filename.fileExtension ).dynamicCast < Assets::Image > ();
     QImage realImage ( filename.fullFilename );
     int nChannels = realImage.depth()/8;
     unsigned char* data = new unsigned char [realImage.byteCount()];

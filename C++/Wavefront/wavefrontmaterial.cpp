@@ -22,6 +22,7 @@ void WavefrontMaterial::_createAttributes ()
     ColorRGB black = { 0, 0, 0 };
     Dissolve dissolve = { false, 0.0f };
     Texture empty; empty.imageID = fake;
+    addAttribute < QString > ( "_RealName", "" );
     addAttribute < ColorRGB > ( "Ambient", black );
     addAttribute < ColorRGB > ( "Diffuse", white );
     addAttribute < ColorRGB > ( "Specular", black );

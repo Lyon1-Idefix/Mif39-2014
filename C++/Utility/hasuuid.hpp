@@ -7,6 +7,7 @@ class HasUUID
 {
 public:
     inline QUuid getUUID () { return mUuid; }
+    inline void setUUID (QUuid value) { mUuid = value; }
     inline const QUuid getUUID () const { return mUuid; }
 protected:
     HasUUID ();

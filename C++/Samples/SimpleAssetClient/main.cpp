@@ -19,6 +19,7 @@ int main ( int argc, char** argv ) {
     __attachAssets();*/
     __attachQImage();
     __attachWavefront();
+
     FileDescriptor file ( argv[1]);
     SharedResourceList ress = ResourceHolder::Load(file);
     SharedResourcePtr ptr = ress [0];

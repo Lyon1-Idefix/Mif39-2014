@@ -20,15 +20,17 @@ int main(int argc, char *argv[])
     __attachQImage();
     __attachWavefront();
     FileDescriptor file ( argv[1]);
-    ResourceHolder::Load(file);
-    ResourceHolder::Usage();
+    QList < SharedResourcePtr > ress = ResourceHolder::Load(file);
+    /*
+     * ByteBuffer tmp = ResourceHolder::ToBuffer(ress[0]);
+    for ( unsigned int i = 0 ; i < tmp.getLength() ; i ++ ) {
+        printf ( "%02x:", tmp.getData() [ i ] );
+        if ( ( i % 16 ) == 0 ) printf ( "\n" );
+    }*/
+
     foreach ( QUuid id, ResourceHolder::AllKeys() ) {
         SharedResourcePtr res = ResourceHolder::GetByUUID(id);
         res->Usage();
-        ByteBuffer buffer = ResourceHolder::ToBuffer( res );
-        unsigned long long index = 0;
-        SharedResourcePtr ptr = ResourceHolder::FromBuffer(buffer,index);
-        ptr->Usage();
     }
     return 0;
 }

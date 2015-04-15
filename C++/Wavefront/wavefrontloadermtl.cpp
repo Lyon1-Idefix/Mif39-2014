@@ -27,8 +27,8 @@ SharedResourceList WavefrontLoaderMTL::__load ( FileDescriptor filename ) {
             QString line = theFile.getLine();
             int pos = line.indexOf ( m_tokens [ 1 ] );
             QString subname = line.right ( line.length() - pos );
-            Assets::MaterialPtr material = ResourceHolder::CreateByName ( "WavefrontMaterial", subname ).dynamicCast < Assets::Material > (); //new WavefrontMaterial ( subname );
-            //Assets::MaterialPtr m ( material );
+            Assets::MaterialPtr material = ResourceHolder::CreateByName ( "WavefrontMaterial", subname ).dynamicCast < Assets::Material > ();
+            material->set < QString > ( "_RealName", subname );
             material.dynamicCast < WavefrontMaterial > ()->fillFromTokenizer(theFile);
             result.append ( material );
         }

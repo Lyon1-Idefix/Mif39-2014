@@ -33,11 +33,22 @@ public:
         return ptr;
     }
     virtual SharedResourcePtr Create (QString name) {
-        SharedResourcePtr ptr ( new ResourceType (name) );
+        uint index=0;
+        QString tmp = "Resource[" + mResourceClassName + ":" + name + "]";
+        if ( mNameCount.find ( tmp ) != mNameCount.end () ) {
+            index = mNameCount[tmp] + 1;
+        }
+        mNameCount[tmp] = index;
+        QString sindex = QString::number(index);
+        QString reference = "Resource[" + mResourceClassName + ":" + name + ":" + sindex + "]";
+        QUuid uuid = UUIDManager::createUUID(reference);
+        SharedResourcePtr ptr ( new ResourceType (reference) );
+        ptr->setUUID ( uuid );
         return ptr;
     }
 protected:
     ResourceDescriptor () {}
+    QMap < QString, uint > mNameCount;
     friend class ResourceHolder;
 };
 template < class ResourceType > char* ResourceDescriptor<ResourceType>::mImplementationName;
