@@ -85,6 +85,7 @@ void Mesh::Usage()
 
 void Mesh::_createAttributes ()
 {
+    addAttribute < QString > ( "_RealName", "" );
     addAttribute < unsigned int > ( "#Vertices", 0 );
     addAttribute < unsigned int > ( "#TexVertices", 0 );
     addAttribute < unsigned int > ( "#Normals", 0 );

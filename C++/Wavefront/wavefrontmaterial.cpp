@@ -65,12 +65,14 @@ bool WavefrontMaterial::fillFromTokenizer(FileTokenizer& theFile)
 }
 
 ByteBuffer WavefrontMaterial::_toBuffer () {
+    Texture tmp;
+    ByteBuffer fake = ::toBuffer (tmp);
     unsigned long long index = 0;
     unsigned long long totalSize =
             5 * sizeof ( ColorRGB )
             + 1 * sizeof ( Dissolve )
             + 3 * sizeof ( float )
-            + 9 * sizeof ( Texture )
+            + 9 * fake.getLength()
             + 1 * sizeof ( int );
     ByteBuffer result (totalSize);
     index = ::toBuffer ( result, index, get < ColorRGB > ( "Ambient" ) );
