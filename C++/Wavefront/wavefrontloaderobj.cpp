@@ -140,6 +140,7 @@ SharedResourceList WavefrontLoaderOBJ::__load ( FileDescriptor filename ) {
                 tid [ i ] = nid [ i ] = id [ i ] = -1;
             if ( nbv == 3 ) {
                 Triangle t;
+                t.m_hasNormals = t.m_hasTexcoords = false;
                 if ( mode >= 2 ) t.m_hasTexcoords = true;
                 else if ( mode >= 1 ) t.m_hasNormals = true;
                 for ( int i = 0 ; i < 3 ; i ++ ) {
@@ -154,6 +155,7 @@ SharedResourceList WavefrontLoaderOBJ::__load ( FileDescriptor filename ) {
                 else { oGrpTri [ iGrpTri ] = t; iGrpTri ++; }
             } else {
                 Triangle t;
+                t.m_hasNormals = t.m_hasTexcoords = false;
                 if ( mode >= 2 ) t.m_hasTexcoords = true;
                 else if ( mode >= 1 ) t.m_hasNormals = true;
                 int idp;
