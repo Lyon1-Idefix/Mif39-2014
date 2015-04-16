@@ -64,3 +64,60 @@ template <> ByteBuffer toBuffer ( const Texture& value )
     return buffer;
 }
 
+
+template <> unsigned long long toBuffer ( ByteBuffer& buffer, unsigned long long index, const Dissolve& value ) {
+    unsigned long long lindex = index;
+    lindex = ::toBuffer ( buffer, lindex, value.halo );
+    lindex = ::toBuffer ( buffer, lindex, value.factor );
+    return lindex;
+}
+
+template <> unsigned long long fromBuffer ( const ByteBuffer& buffer, unsigned long long index, Dissolve& value ) {
+    unsigned long long lindex = index;
+    lindex = ::fromBuffer ( buffer, lindex, value.halo );
+    lindex = ::fromBuffer ( buffer, lindex, value.factor );
+    return lindex;
+}
+
+template <> ByteBuffer toBuffer ( const Dissolve& value )
+{
+    unsigned long long totalSize = sizeof ( bool ) + sizeof ( float ),
+            lindex = 0;
+    ByteBuffer buffer ( totalSize );
+    lindex = ::toBuffer ( buffer, lindex, value.halo );
+    lindex = ::toBuffer ( buffer, lindex, value.factor );
+    return buffer;
+}
+
+template <> unsigned long long toBuffer ( ByteBuffer& buffer, unsigned long long index, const Triangle& value ) {
+    unsigned long long lindex = index;
+    lindex = ::toBuffer ( buffer, lindex, value.m_hasNormals );
+    lindex = ::toBuffer ( buffer, lindex, value.m_hasTexcoords );
+    lindex = ::toBuffer ( buffer, lindex, value.m_vertexIndices, 3 );
+    lindex = ::toBuffer ( buffer, lindex, value.m_normalIndices, 3 );
+    lindex = ::toBuffer ( buffer, lindex, value.m_texcoordIndices, 3 );
+    return lindex;
+}
+
+template <> unsigned long long fromBuffer ( const ByteBuffer& buffer, unsigned long long index, Triangle& value ) {
+    unsigned long long lindex = index;
+    lindex = ::fromBuffer ( buffer, lindex, value.m_hasNormals );
+    lindex = ::fromBuffer ( buffer, lindex, value.m_hasTexcoords );
+    lindex = ::fromBuffer ( buffer, lindex, value.m_vertexIndices, 3 );
+    lindex = ::fromBuffer ( buffer, lindex, value.m_normalIndices, 3 );
+    lindex = ::fromBuffer ( buffer, lindex, value.m_texcoordIndices, 3 );
+    return lindex;
+}
+
+template <> ByteBuffer toBuffer ( const Triangle& value )
+{
+    unsigned long long totalSize = 2 * sizeof ( bool ) + 3 * 3 * sizeof ( int ),
+            lindex = 0;
+    ByteBuffer buffer ( totalSize );
+    lindex = ::toBuffer ( buffer, lindex, value.m_hasNormals );
+    lindex = ::toBuffer ( buffer, lindex, value.m_hasTexcoords );
+    lindex = ::toBuffer ( buffer, lindex, value.m_vertexIndices, 3 );
+    lindex = ::toBuffer ( buffer, lindex, value.m_normalIndices, 3 );
+    lindex = ::toBuffer ( buffer, lindex, value.m_texcoordIndices, 3 );
+    return buffer;
+}
