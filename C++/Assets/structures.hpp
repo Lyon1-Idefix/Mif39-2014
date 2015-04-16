@@ -39,5 +39,9 @@ typedef struct {
     TextureChannel Channel;
 } Texture;
 
+template <> unsigned long long toBuffer ( ByteBuffer& buffer, unsigned long long index, const Texture& value );
+template <> unsigned long long fromBuffer ( const ByteBuffer& buffer, unsigned long long index, Texture& value );
+template <> ByteBuffer toBuffer ( const Texture& value );
+
 #endif // STRUCTURES_HPP
 

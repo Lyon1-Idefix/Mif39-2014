@@ -53,6 +53,7 @@ public:
     virtual void clear ();
 protected:
     ByteBuffer* mCurrent;
+public:
     bool mAddingReleaseBuffer;
     bool mGettingReleaseBuffer;
 };
@@ -70,6 +71,7 @@ public:
     virtual void clear ();
 protected:
     QQueue < ByteBuffer* > mBuffers;
+public:
     bool mGettingReleaseBuffer;
 };
 
