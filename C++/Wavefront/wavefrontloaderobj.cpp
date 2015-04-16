@@ -132,7 +132,6 @@ SharedResourceList WavefrontLoaderOBJ::__load ( FileDescriptor filename ) {
                 if ( indices.count () == 2 )
                     mode = 3;
             }
-            std::cout << "Face mode :: " << mode << " ";
             unsigned int nbv = m_tokens.size () - 1;
             int id [ 3 ];
             int nid [ 3 ];
@@ -144,7 +143,6 @@ SharedResourceList WavefrontLoaderOBJ::__load ( FileDescriptor filename ) {
                 t.m_hasNormals = t.m_hasTexcoords = false;
                 if ( mode >= 2 ) t.m_hasTexcoords = true;
                 if ( mode >= 1 ) t.m_hasNormals = true;
-                std::cout << ":: " << t.m_hasTexcoords << "," << t.m_hasNormals << " ";
                 for ( int i = 0 ; i < 3 ; i ++ ) {
                     indices = m_tokens [ i + 1 ].split ( "/", QString::SkipEmptyParts );
                     t.m_vertexIndices [ i ] = indices [ 0 ].toUInt () - 1;
@@ -160,7 +158,6 @@ SharedResourceList WavefrontLoaderOBJ::__load ( FileDescriptor filename ) {
                 t.m_hasNormals = t.m_hasTexcoords = false;
                 if ( mode >= 2 ) t.m_hasTexcoords = true;
                 if ( mode >= 1 ) t.m_hasNormals = true;
-                std::cout << ":: " << t.m_hasTexcoords << "," << t.m_hasNormals << " ";
                 int idp;
                 idp = 0; indices = m_tokens [ 1 ].split ( "/", QString::SkipEmptyParts );
                 t.m_vertexIndices [ idp ] = indices [ 0 ].toUInt () - 1;
@@ -185,11 +182,9 @@ SharedResourceList WavefrontLoaderOBJ::__load ( FileDescriptor filename ) {
                     else { oGrpTri [ iGrpTri ] = t; iGrpTri ++; }
                 }
             }
-            std::cout << "             \r";
         }
         theFile.readTokens();
     }
-    std::cout << std::endl;
     if ( iTri != nbf ) {
         if ( iTri == 0 ) { delete [] oTri; oTri = NULL; }
         else {
