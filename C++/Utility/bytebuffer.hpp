@@ -40,47 +40,32 @@ protected:
 
 ///////////////////////////////////////
 
-template < class InnerType > unsigned long long toBuffer ( ByteBuffer& buffer, unsigned long long index, const InnerType& value )
-{
-    if ( ( index + sizeof ( InnerType ) ) > buffer.getLength() ) std::cout << "****** SIZE ERROR *******" << std::endl;
-    memcpy ( buffer.getData() + index, (void*) & value, sizeof ( InnerType ) );
-    return index + sizeof ( InnerType );
-}
+// generic ByteBuffer conversion
+template < class InnerType > unsigned long long toBuffer ( ByteBuffer& buffer, unsigned long long index, const InnerType& value );
+template < class InnerType > unsigned long long fromBuffer ( const ByteBuffer& buffer, unsigned long long index, InnerType& value );
+template < class InnerType > ByteBuffer toBuffer ( const InnerType& value );
 
-template < class InnerType > unsigned long long fromBuffer ( const ByteBuffer& buffer, unsigned long long index, InnerType& value )
-{
-    memcpy ( (void*) & value, buffer.getData() + index, sizeof ( InnerType ) );
-    return index + sizeof ( InnerType );
-}
+// generic ByteBuffer conversion
+template < class InnerType > unsigned long long toBuffer ( ByteBuffer& buffer, unsigned long long index, const InnerType*& value );
+template < class InnerType > unsigned long long fromBuffer ( const ByteBuffer& buffer, unsigned long long index, InnerType*& value );
+template < class InnerType > ByteBuffer toBuffer ( const InnerType*& value );
 
-///////////////////////////////////////
-
-template < class InnerType > unsigned long long toBuffer ( ByteBuffer& buffer, unsigned long long index, const InnerType* value, const unsigned long long length )
-{
-    if ( ( index + length * sizeof ( InnerType ) ) > buffer.getLength() ) std::cout << "****** SIZE ERROR *******" << std::endl;
-    memcpy ( buffer.getData() + index, (void*) value, length * sizeof ( InnerType ) );
-    return index + length * sizeof ( InnerType );
-}
-
-template < class InnerType > unsigned long long fromBuffer ( const ByteBuffer& buffer, unsigned long long index, InnerType* value, const unsigned long long length )
-{
-    memcpy ( (void*) value, buffer.getData() + index, length * sizeof ( InnerType ) );
-    return index + length * sizeof ( InnerType );
-}
+// generic ByteBuffer conversion (C/C++ arrays)
+template < class InnerType > unsigned long long toBuffer ( ByteBuffer& buffer, unsigned long long index, const InnerType* value, const unsigned long long length );
+template < class InnerType > unsigned long long fromBuffer ( const ByteBuffer& buffer, unsigned long long index, InnerType* value, const unsigned long long length );
+template < class InnerType > ByteBuffer toBuffer ( const InnerType* value, const unsigned long long length );
 
 ///////////////////////////////////////
 
-template < class InnerType > ByteBuffer toBuffer ( const InnerType& value ) {
-    ByteBuffer result ( sizeof ( InnerType ) );
-    unsigned int nindex = toBuffer ( result, 0, value );
-    return result;
-}
+// specialized ByteBuffer conversion (QT lists)
+template < class InnerType > unsigned long long toBuffer ( ByteBuffer& buffer, unsigned long long index, const QList < InnerType >& value );
+template < class InnerType > unsigned long long fromBuffer ( const ByteBuffer& buffer, unsigned long long index, const QList < InnerType >& value );
+template < class InnerType > ByteBuffer toBuffer ( const QList < InnerType >& value );
 
-template < class InnerType > ByteBuffer toBuffer ( const InnerType* value, const unsigned long long length ) {
-    ByteBuffer result ( length * sizeof ( InnerType ) );
-    unsigned int nindex = toBuffer ( result, 0, value, length );
-    return result;
-}
+// specialized ByteBuffer conversion (QT lists of pointers)
+template < class InnerType > unsigned long long toBuffer ( ByteBuffer& buffer, unsigned long long index, const QList < InnerType* >& value );
+template < class InnerType > unsigned long long fromBuffer ( const ByteBuffer& buffer, unsigned long long index, const QList < InnerType* >& value );
+template < class InnerType > ByteBuffer toBuffer ( const QList < InnerType* >& value );
 
 ///////////////////////////////////////
 
@@ -91,5 +76,9 @@ template <> ByteBuffer toBuffer ( const QUuid& value );
 template <> unsigned long long toBuffer ( ByteBuffer& buffer, unsigned long long index, const QString& value );
 template <> unsigned long long fromBuffer ( const ByteBuffer& buffer, unsigned long long index, QString& value );
 template <> ByteBuffer toBuffer ( const QString& value );
+
+///////////////////////////////////////
+
+#include "bytebuffer.inline.hpp"
 
 #endif // BYTEBUFFER_H

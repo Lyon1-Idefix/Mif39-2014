@@ -19,7 +19,8 @@ SharedResourceList WavefrontLoaderOBJ::__load ( FileDescriptor filename ) {
 
     FileTokenizer theFile ( filename );
 
-    Assets::MeshPtr currentObject = ResourceHolder::CreateByName ( "Mesh", filename.fullFilename ).dynamicCast < Assets::Mesh > ();
+    Assets::MeshPtr currentObject = ResourceHolder::CreateByName ( "Mesh", filename.fileBasename ).dynamicCast < Assets::Mesh > ();
+    currentObject->set < QString > ( "_RealName", filename.fileBasename );
     //( new Assets::Mesh ( theFile.mDescriptor.fileBasename ) );
     Assets::MaterialGroup* currentMaterial = NULL;
 
@@ -68,10 +69,7 @@ SharedResourceList WavefrontLoaderOBJ::__load ( FileDescriptor filename ) {
             int pos = line.indexOf ( m_tokens [ 1 ] );
             QString subname = line.right ( line.length() - pos );
             QString fname;
-            if ( subname.at(0) == '/' )
-                fname = theFile.mDescriptor.fileSubDirectory + subname;
-            else
-                fname = theFile.mDescriptor.fileSubDirectory + "/" + subname;
+            fname = theFile.mDescriptor.fileDirectory + "/" + theFile.mDescriptor.fileSubDirectory + "/" + subname;
             FileDescriptor file ( fname, theFile.mDescriptor.fileDirectory );
             SharedResourceList matAssets = ResourceHolder::Load(file);
             if ( matAssets.size() > 0 ) {
@@ -102,6 +100,7 @@ SharedResourceList WavefrontLoaderOBJ::__load ( FileDescriptor filename ) {
             int pos = line.indexOf ( m_tokens [ 1 ] );
             QString name = line.right ( line.length() - pos );
             currentObject = ResourceHolder::CreateByName ( "Mesh", name ).dynamicCast < Assets::Mesh > ();
+            currentObject->set < QString > ( "_RealName", name );
             currentMaterial = NULL;
         }
         else if ( m_tokens [ 0 ] == "v" ) {

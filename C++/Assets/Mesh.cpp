@@ -41,7 +41,6 @@ ByteBuffer MaterialGroup::_toBuffer ()
     index = ::toBuffer ( buffer, index, get < unsigned int > ( "#Faces" ) );
     for ( int i = 0 ; i < get < unsigned int > ( "#Faces" ) ; i ++ )
         index = ::toBuffer ( buffer, index, get < Triangle* > ( "Faces" ) [ i ] );
-    //index = ::toBuffer ( buffer, index, get < Triangle* > ( "Faces" ), get < unsigned int > ( "#Faces" ) );
     return buffer;
 }
 
@@ -124,7 +123,6 @@ ByteBuffer Mesh::_toBuffer() {
     index = ::toBuffer ( result, index, get < unsigned int > ( "#Faces" ) );
     for ( int i = 0 ; i < get < unsigned int > ( "#Faces" ) ; i ++ )
         index = ::toBuffer ( result, index, get < Triangle* > ( "Faces" ) [ i ] );
-    //index = ::toBuffer ( result, index, get < Triangle* > ( "Faces" ), get < unsigned int > ( "#Faces" ) );
     /**/
     index = ::toBuffer ( result, index, getSize < MaterialGroup* > ( "MaterialGroups" ) );
     for ( unsigned int i = 0 ; i < getSize < MaterialGroup* > ( "MaterialGroups" ) ; i ++ ) {

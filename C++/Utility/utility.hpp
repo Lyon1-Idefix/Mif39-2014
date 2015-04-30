@@ -11,5 +11,7 @@
 #include "Utility/hasuuid.hpp"
 #include "Utility/listof.hpp"
 
+#define LOGVALUEOF(v) #v << " = [" << (v) << "]"
+
 #endif // UTILITY_HPP
 

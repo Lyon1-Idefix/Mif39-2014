@@ -29,6 +29,7 @@ void Image::Usage()
 
 void Image::_createAttributes ()
 {
+    addAttribute < QString > ( "_RealName", "" );
     addAttribute < unsigned int > ( "Width", 0 );
     addAttribute < unsigned int > ( "Height", 0 );
     addAttribute < unsigned int > ( "Depth", 0 );

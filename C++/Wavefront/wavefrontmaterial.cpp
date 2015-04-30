@@ -65,12 +65,12 @@ bool WavefrontMaterial::fillFromTokenizer(FileTokenizer& theFile)
 }
 
 ByteBuffer WavefrontMaterial::_toBuffer () {
-    Texture tmp;
-    ByteBuffer fake = ::toBuffer (tmp);
+    Texture tmp; ByteBuffer fake = ::toBuffer (tmp);
+    Dissolve tmpd; ByteBuffer faked = ::toBuffer (tmpd);
     unsigned long long index = 0;
     unsigned long long totalSize =
             5 * sizeof ( ColorRGB )
-            + 1 * sizeof ( Dissolve )
+            + 1 * faked.getLength()
             + 3 * sizeof ( float )
             + 9 * fake.getLength()
             + 1 * sizeof ( int );
@@ -327,10 +327,7 @@ bool WavefrontMaterial::fillFromTokenizer (FileTokenizer& theFile, Texture& tex)
     int pos = line.indexOf ( tokens [ i ] );
     QString subname = line.right ( line.length() - pos );
     QString fname;
-    if ( subname.at(0) == '/' )
-        fname = theFile.mDescriptor.fileDirectory + subname;
-    else
-        fname = theFile.mDescriptor.fileDirectory + "/" + subname;
+    fname = theFile.mDescriptor.fileDirectory + "/" + theFile.mDescriptor.fileSubDirectory + "/" + subname;
     SharedResourceList imgAssets = ResourceHolder::Load(fname);
     if ( imgAssets.size() == 1 ) {
         m_image = imgAssets[0]->getUUID ();

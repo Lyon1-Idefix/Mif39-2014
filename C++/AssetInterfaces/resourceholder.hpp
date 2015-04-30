@@ -108,17 +108,20 @@ public:
     /// \param type, UUID of resource type
     /// \return shared pointer on the resource
     ///
+    /*
     static SharedResourcePtr CreateByUUID ( QUuid type ) {
         BaseResourceDescriptor* desc = mResourceDescriptors [ type ];
         SharedResourcePtr result = desc->Create();
         result->mTypeID = desc->mResourceTypeID;
         return result;
     }
+    */
     ///
     /// \brief CreateByName
     /// \param name, name of resource type
     /// \return shared pointer on the resource
     ///
+    /*
     static SharedResourcePtr CreateByName ( QString name ) {
         QUuid type = UUIDManager::createUUID( "AssetImplementation::" + name );
         BaseResourceDescriptor* desc = mResourceDescriptors [ type ];
@@ -126,6 +129,7 @@ public:
         result->mTypeID = desc->mResourceTypeID;
         return result;
     }
+    */
     ///
     /// \brief CreateByName
     /// \param name, name of resource type
@@ -137,7 +141,14 @@ public:
         BaseResourceDescriptor* desc = mResourceDescriptors [ type ];
         SharedResourcePtr result = desc->Create(resname);
         result->mTypeID = desc->mResourceTypeID;
+        if ( mResources.find(result->getUUID()) != mResources.end () )
+            std::cerr << "ERROR: UUID " << result->getUUID().toString().toStdString() << " already registered for " << result->getName().toStdString() << std::endl;
+        mResources [ result->getUUID () ] = result;
+        mResourceDescriptors [ result->mTypeID ]->mManager->mLoadedResources [ result->getUUID() ] = result;
         return result;
+    }
+    static QString GetTypeByUUID ( QUuid uuid ) {
+        return mResourceDescriptors [ uuid ]->mResourceClassName;
     }
     ///
     /// \brief GetByUUID
@@ -170,11 +181,13 @@ public:
         if ( ! loader.isNull() )
             lib = loader->load(filename);
         mLibraries[uuidFile] = lib;
+        /*
         foreach ( SharedResourcePtr res, lib ) {
-            res->InitializeUUID("Assets:"+filename.fullFilename+":"+res->getName());
+            //res->InitializeUUID("Assets:"+filename.fullFilename+":"+res->getName());
             mResources [ res->getUUID () ] = res;
             mResourceDescriptors [ res->mTypeID ]->mManager->mLoadedResources [ res->getUUID() ] = res;
         }
+        */
         return lib;
     }
 

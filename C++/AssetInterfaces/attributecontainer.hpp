@@ -11,7 +11,7 @@ public:
     IResourceAttribute* getAttr ( QString name ) { return mAttributes [ name ]; }
     const IResourceAttribute* getAttr ( QString name ) const { return mAttributes [ name ]; }
     //
-    template < class AttributeType > void set ( QString name, const AttributeType& value ) {
+    template < class AttributeType > void set ( QString name, AttributeType value ) {
         ( mAttributes [ name ] )->setValue < AttributeType > ( value );
     }
     template < class AttributeType > AttributeType& get ( QString name ) {
@@ -21,7 +21,7 @@ public:
         return ( mAttributes [ name ] )->getValue < const AttributeType > ();
     }
     //
-    template < class AttributeType > void add ( QString name, const AttributeType& value ) {
+    template < class AttributeType > void add ( QString name, AttributeType value ) {
         ( mAttributes [ name ] )->addValue < AttributeType > ( value );
     }
     template < class AttributeType > AttributeType& get ( QString name, int index ) {
@@ -31,7 +31,7 @@ public:
         return ( mAttributes [ name ] )->getValue < const AttributeType > (index);
     }
     //
-    template < class AttributeType > void add ( QString name, QString vname, const AttributeType& value ) {
+    template < class AttributeType > void add ( QString name, QString vname, AttributeType value ) {
         ( mAttributes [ name ] )->addValue < AttributeType > ( vname, value );
     }
     template < class AttributeType > AttributeType& get ( QString name, QString vname ) {

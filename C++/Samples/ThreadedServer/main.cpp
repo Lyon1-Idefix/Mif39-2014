@@ -46,6 +46,9 @@ void OnReceive ( QUuid client ) {
     if ( message->getLength() > 0 ) {
         std::cout << "Recv : " << message->getLength() << " bytes from " << theClients [ client ]->uuid.toString().toStdString() << std::endl;
         // gestion du message recu cote serveur
+        unsigned long long index = 0;
+        SharedResourcePtr mesh = ResourceHolder::FromBuffer(*message, index);
+        std::cout << "Got mesh" << std::endl;
     }
     delete message;
 }

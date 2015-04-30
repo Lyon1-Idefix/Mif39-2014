@@ -33,12 +33,14 @@ bool SimpleTcpEndPoint::send ( const ByteBuffer& buffer )
 {
     unsigned int lg;
     unsigned int length = buffer.getLength();
+    std::cout << "sending buffer size : " << length << " :: " << buffer.getLength () << std::endl;
     lg = mSocket->sendData( (unsigned char*) & length, sizeof ( unsigned int ) );
     if ( lg != sizeof ( unsigned int ) ) {
         close ();
         return false;
     }
     lg = mSocket->sendData ( buffer.getData(), buffer.getLength() );
+    std::cout << "sending buffer : " << lg << " :: " << buffer.getLength () << std::endl;
     if ( lg != buffer.getLength() ) {
         close ();
         return false;

@@ -16,11 +16,16 @@ typedef QSharedPointer < GameEntityManager > GameEntityManagerPtr;
 
 typedef QList < QSharedPointer < GameEntity > > GameEntityList;
 
-class GameEntityAttribute :
+class GameEntityElement :
         virtual public IResource
 {
 public:
-    GameEntityAttribute () {}
+    GameEntityElement ();
+    GameEntityElement ( GameEntityPtr entity, QString name );
+protected:
+    virtual void _createAttributes ();
+    virtual ByteBuffer _toBuffer ();
+    virtual unsigned long long _fromBuffer ( const ByteBuffer& buffer, unsigned long long index = 0 );
 };
 
 class GameEntity :
@@ -39,11 +44,13 @@ protected:
 };
 
 class GameEntityLoader :
-        virtual public SharedResourceLoader < GameEntity >
+        virtual public SharedResourceLoader < GameEntity >,
+        virtual public Singleton < GameEntityLoader >
 {
 public:
     GameEntityLoader ();
     virtual ~GameEntityLoader ();
+    virtual SharedResourceList __load ( FileDescriptor filename );
 };
 
 class GameEntityManager :

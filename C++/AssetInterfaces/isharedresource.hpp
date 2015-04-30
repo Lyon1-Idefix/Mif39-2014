@@ -38,8 +38,8 @@ public:
 
     virtual ByteBuffer _toBuffer () = 0;
     virtual unsigned long long _fromBuffer ( const ByteBuffer& buffer, unsigned long long index = 0 ) = 0;
-protected:
     QUuid mTypeID;
+protected:
     FileDescriptor mFromFile;
     friend class ResourceHolder;
 };

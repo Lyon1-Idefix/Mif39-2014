@@ -13,20 +13,24 @@ public:
     virtual ~IResourceAttribute () {}
     template <class AttributeType> IResourceAttribute& operator= ( const AttributeType& value );
     //
-    template <class AttributeType> void setValue ( const AttributeType& value );
+    template <class AttributeType> void setValue ( AttributeType value );
     template <class AttributeType> AttributeType& getValue ();
     template <class AttributeType> const AttributeType& getValue () const;
     //
-    template <class AttributeType> void addValue ( const AttributeType& value );
+    template <class AttributeType> void addValue ( AttributeType value );
     template <class AttributeType> AttributeType& getValue (int index);
     template <class AttributeType> const AttributeType& getValue (int index) const;
     //
-    template <class AttributeType> void addValue ( QString name, const AttributeType& value );
+    template <class AttributeType> void addValue ( QString name, AttributeType value );
     template <class AttributeType> AttributeType& getValue (QString name);
     template <class AttributeType> const AttributeType& getValue (QString name) const;
     //
     template <class AttributeType> unsigned int getSize () const;
     template < class AttributeType > QList < QString > getKeys () const;
+    //
+    virtual ByteBuffer convertToBuffer () = 0;
+    virtual unsigned long long convertToBuffer ( ByteBuffer& buffer, unsigned long long index ) = 0;
+    virtual unsigned long long convertFromBuffer ( const ByteBuffer& buffer, unsigned long long index ) = 0;
 protected:
     IResourceAttribute (QString name) {
         HasName::Initialize(name);
@@ -45,9 +49,19 @@ public:
         mValue ( value )
     {
     }
-    void setValue ( const AttributeType& value ) { mValue = value; }
+    void setValue ( AttributeType value ) { mValue = value; }
     AttributeType& getValue() { return mValue; }
     const AttributeType& getValue() const { return mValue; }
+    //
+    virtual ByteBuffer convertToBuffer () {
+        return ::toBuffer ( mValue );
+    }
+    virtual unsigned long long convertToBuffer ( ByteBuffer& buffer, unsigned long long index ) {
+        return ::toBuffer ( buffer, index, mValue );
+    }
+    virtual unsigned long long convertFromBuffer ( const ByteBuffer& buffer, unsigned long long index ) {
+        return ::fromBuffer ( buffer, index, mValue );
+    }
 protected:
     AttributeType mValue;
 };
@@ -64,7 +78,7 @@ public:
     {
     }
     //
-    void addValue ( const AttributeType& value ) { mValue.append(value); }
+    void addValue ( AttributeType value ) { mValue.append(value); }
     AttributeType& getValue(int index) { return mValue [ index ]; }
     const AttributeType& getValue(int index) const { return mValue.at(index); }
     AttributeType& getValue(QString name) {
@@ -79,6 +93,33 @@ public:
     }
     unsigned int getSize () const { return mValue.size(); }
     const QList < AttributeType >& getContent () const { return mValue; }
+    //
+    virtual ByteBuffer convertToBuffer () {
+        unsigned int length = mValue.size();
+        ByteBuffer result = ::toBuffer ( length );
+        for ( unsigned int i = 0 ; i < length ; i ++ )
+            result.append ( ::toBuffer ( mValue [ i ] ) );
+        return result;
+    }
+    virtual unsigned long long convertToBuffer ( ByteBuffer& buffer, unsigned long long index ) {
+        unsigned int length = mValue.size();
+        unsigned int lindex = index;
+        lindex = ::toBuffer <unsigned int> ( buffer, lindex, length );
+        for ( unsigned int i = 0 ; i < length ; i ++ )
+            lindex = ::toBuffer ( buffer, lindex, mValue [ i ] );
+        return lindex;
+    }
+    virtual unsigned long long convertFromBuffer ( const ByteBuffer& buffer, unsigned long long index ) {
+        unsigned int length;
+        unsigned long long lindex = index;
+        lindex = ::fromBuffer ( buffer, lindex, length );
+        for ( unsigned int i = 0 ; i < length ; i ++ ) {
+            AttributeType value;
+            lindex = ::fromBuffer ( buffer, lindex, value );
+            mValue.append(value);
+        }
+        return lindex;
+    }
 protected:
     QList < AttributeType > mValue;
 };
@@ -95,7 +136,7 @@ public:
     {
     }
     //
-    void addValue ( QString name, const AttributeType& value ) { mValue[name] = value; }
+    void addValue ( QString name, AttributeType value ) { mValue[name] = value; }
     AttributeType& getValue(QString name) {
         return mValue [ name ];
     }
@@ -107,6 +148,41 @@ public:
         return mValue.keys();
     }
     const QMap < QString, AttributeType >& getContent () const { return mValue; }
+    //
+    virtual ByteBuffer convertToBuffer () {
+        unsigned int length = mValue.size();
+        ByteBuffer result = ::toBuffer ( length );
+        foreach ( QString key, mValue.keys () ) {
+            AttributeType value = mValue [ key ];
+            result.append( ::toBuffer ( key ) );
+            result.append( ::toBuffer ( value ) );
+        }
+        return result;
+    }
+    virtual unsigned long long convertToBuffer ( ByteBuffer& buffer, unsigned long long index ) {
+        unsigned int length = mValue.size();
+        unsigned int lindex = index;
+        lindex = ::toBuffer <unsigned int> ( buffer, lindex, length );
+        foreach ( QString key, mValue.keys () ) {
+            AttributeType value = mValue [ key ];
+            lindex = ::toBuffer ( buffer, lindex, key );
+            lindex = ::toBuffer ( buffer, lindex, value );
+        }
+        return lindex;
+    }
+    virtual unsigned long long convertFromBuffer ( const ByteBuffer& buffer, unsigned long long index ) {
+        unsigned int length;
+        unsigned long long lindex = index;
+        lindex = ::fromBuffer ( buffer, lindex, length );
+        for ( unsigned int i = 0 ; i < length ; i ++ ) {
+            QString key;
+            AttributeType value;
+            lindex = ::fromBuffer ( buffer, lindex, key );
+            lindex = ::fromBuffer ( buffer, lindex, value );
+            mValue [ key ] = value;
+        }
+        return lindex;
+    }
 
 protected:
     QMap < QString, AttributeType > mValue;
@@ -124,7 +200,7 @@ template <class AttributeType> IResourceAttribute& IResourceAttribute::operator=
 ////////////////////////////////////////////////////////////
 ///
 ///
-template <class AttributeType> void IResourceAttribute::setValue ( const AttributeType& value ) {
+template <class AttributeType> void IResourceAttribute::setValue ( AttributeType value ) {
     ResourceAttribute < AttributeType >* tmp = dynamic_cast < ResourceAttribute < AttributeType >* > ( this );
     tmp->setValue ( value );
 }
@@ -142,7 +218,7 @@ template <class AttributeType> const AttributeType& IResourceAttribute::getValue
 ////////////////////////////////////////////////////////////
 ///
 ///
-template <class AttributeType> void IResourceAttribute::addValue ( const AttributeType& value ) {
+template <class AttributeType> void IResourceAttribute::addValue ( AttributeType value ) {
     ResourceIndexedAttribute < AttributeType >* tmp = dynamic_cast < ResourceIndexedAttribute < AttributeType >* > ( this );
     tmp->addValue ( value );
 }
@@ -160,7 +236,7 @@ template <class AttributeType> const AttributeType& IResourceAttribute::getValue
 ////////////////////////////////////////////////////////////
 ///
 ///
-template <class AttributeType> void IResourceAttribute::addValue ( QString name, const AttributeType& value ) {
+template <class AttributeType> void IResourceAttribute::addValue ( QString name, AttributeType value ) {
     ResourceNamedAttribute < AttributeType >* tmp = dynamic_cast < ResourceNamedAttribute < AttributeType >* > ( this );
     tmp->addValue ( name, value );
 }
