@@ -153,7 +153,7 @@ WorldLoader::WorldLoader () {}
 WorldLoader::~WorldLoader () {}
 
 SharedResourceList WorldLoader::__load ( FileDescriptor filename ) {
-    std::cout << "WorldLoader::load(" << filename.fullFilename.toStdString() << ")" << std::endl;
+    //std::cout << "WorldLoader::load(" << filename.fullFilename.toStdString() << ")" << std::endl;
     SharedResourceList result;
 
     WorldPtr currentWorld ( NULL );

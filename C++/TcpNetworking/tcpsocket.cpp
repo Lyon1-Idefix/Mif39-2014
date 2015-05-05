@@ -156,7 +156,7 @@ int TcpSocket::sendData( const unsigned char* message, const unsigned int length
         {
             current_size = send( mSocket, &(message[total_size]), length-total_size, MSG_NOSIGNAL);
             if( current_size <= 0 ) {
-                printf("sendData : could not write to socket.\n");
+                //printf("sendData : could not write to socket.\n");
                 mMode = CommunicationPolicy::Erroneous;
                 return -1;
             }
@@ -233,7 +233,7 @@ int TcpSocket::receiveData( unsigned char* message, const unsigned int length)
     {
         current_size = recv( mSocket, &(message[total_size]), length-total_size, 0);
         if( current_size <= 0 ) {
-            printf("recvData : could not read from socket.\n");
+            //printf("recvData : could not read from socket.\n");
             mMode = CommunicationPolicy::Erroneous;
             return -1;
         }

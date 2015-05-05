@@ -48,6 +48,11 @@ ByteBuffer Light::_toBuffer() {
 
 unsigned long long Light::_fromBuffer ( const ByteBuffer& buffer, unsigned long long index ) {
     unsigned long long lindex = index;
+    IResourceAttribute* attr;
+    attr = getAttr("_RealName"); lindex = attr->convertFromBuffer(buffer,lindex);
+    attr = getAttr("Type"); lindex = attr->convertFromBuffer(buffer,lindex);
+    attr = getAttr("Intensity"); lindex = attr->convertFromBuffer(buffer,lindex);
+    attr = getAttr("Color"); lindex = attr->convertFromBuffer(buffer,lindex);
     return lindex;
 }
 
@@ -55,7 +60,7 @@ LightLoader::LightLoader () {}
 LightLoader::~LightLoader () {}
 
 SharedResourceList LightLoader::__load ( FileDescriptor filename ) {
-    std::cout << "LightLoader::load(" << filename.fullFilename.toStdString() << ")" << std::endl;
+    //std::cout << "LightLoader::load(" << filename.fullFilename.toStdString() << ")" << std::endl;
     SharedResourceList result;
 
     LightPtr currentLight;

@@ -134,7 +134,7 @@ GameEntityLoader::GameEntityLoader () {}
 GameEntityLoader::~GameEntityLoader () {}
 
 SharedResourceList GameEntityLoader::__load ( FileDescriptor filename ) {
-    std::cout << "GameEntityLoader::load(" << filename.fullFilename.toStdString() << ")" << std::endl;
+    //std::cout << "GameEntityLoader::load(" << filename.fullFilename.toStdString() << ")" << std::endl;
     SharedResourceList result;
 
     GameEntityPtr currentEntity;

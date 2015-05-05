@@ -7,6 +7,9 @@
 #include "AssetInterfaces/isharedresourceloader.hpp"
 #include "AssetInterfaces/isharedresourcemanager.hpp"
 
+#include <iostream>
+#include <fstream>
+
 class BaseResourceDescriptor
 {
 public:
@@ -85,6 +88,7 @@ public:
         tmp->mManager = mgr;
         mResourceDescriptors [ tmp->mResourceTypeID ] = tmp;
         ResourceInterfaceDescriptor < ResourceType >::mInterfaceName = strdup ( name.toStdString().c_str() );
+        std::cout << "Interface: [" << name.toStdString() << "] --> [" << tmp->mResourceTypeID.toString().toStdString() << "]" << std::endl;
     }
     template < class ResourceType, class InterfaceType > static void RegisterImplementation ( QString name ) {
         QString interfaceName = ResourceInterfaceDescriptor < InterfaceType >::mInterfaceName;
@@ -97,6 +101,7 @@ public:
         tmp->mManager = desc->mManager;
         mResourceDescriptors [ tmp->mResourceTypeID ] = tmp;
         ResourceDescriptor < ResourceType >::mImplementationName = strdup ( name.toStdString().c_str() );
+        std::cout << "Implementation: [" << name.toStdString() << "] --> [" << tmp->mResourceTypeID.toString().toStdString() << "]" << std::endl;
     }
     template < class ResourceType, class LoaderType > static void RegisterLoader ( QMimeType fileType ) {
         SharedResourceLoaderPtr ldr = LoaderType::Instance ();
@@ -104,130 +109,41 @@ public:
     }
 
     ///
-    /// \brief CreateByUUID
-    /// \param type, UUID of resource type
-    /// \return shared pointer on the resource
-    ///
-    /*
-    static SharedResourcePtr CreateByUUID ( QUuid type ) {
-        BaseResourceDescriptor* desc = mResourceDescriptors [ type ];
-        SharedResourcePtr result = desc->Create();
-        result->mTypeID = desc->mResourceTypeID;
-        return result;
-    }
-    */
-    ///
-    /// \brief CreateByName
-    /// \param name, name of resource type
-    /// \return shared pointer on the resource
-    ///
-    /*
-    static SharedResourcePtr CreateByName ( QString name ) {
-        QUuid type = UUIDManager::createUUID( "AssetImplementation::" + name );
-        BaseResourceDescriptor* desc = mResourceDescriptors [ type ];
-        SharedResourcePtr result = desc->Create();
-        result->mTypeID = desc->mResourceTypeID;
-        return result;
-    }
-    */
-    ///
     /// \brief CreateByName
     /// \param name, name of resource type
     /// \param resname, name of resource
     /// \return shared pointer on the resource
     ///
-    static SharedResourcePtr CreateByName ( QString name, QString resname ) {
-        QUuid type = UUIDManager::createUUID( "AssetImplementation::" + name );
-        BaseResourceDescriptor* desc = mResourceDescriptors [ type ];
-        SharedResourcePtr result = desc->Create(resname);
-        result->mTypeID = desc->mResourceTypeID;
-        if ( mResources.find(result->getUUID()) != mResources.end () )
-            std::cerr << "ERROR: UUID " << result->getUUID().toString().toStdString() << " already registered for " << result->getName().toStdString() << std::endl;
-        mResources [ result->getUUID () ] = result;
-        mResourceDescriptors [ result->mTypeID ]->mManager->mLoadedResources [ result->getUUID() ] = result;
-        return result;
-    }
-    static QString GetTypeByUUID ( QUuid uuid ) {
-        return mResourceDescriptors [ uuid ]->mResourceClassName;
-    }
+    static SharedResourcePtr CreateByName ( QString name, QString resname );
+    static QString GetTypeByUUID ( QUuid uuid );
     ///
     /// \brief GetByUUID
     /// \param uuid, UUID of the requested resource
     /// \return shared pointer on the resource
     ///
-    static SharedResourcePtr GetByUUID ( QUuid uuid ) {
-        return mResources [ uuid ];
-    }
+    static SharedResourcePtr GetByUUID ( QUuid uuid );
+    static SharedResourceList GetAllByTypeName ( QString name );
     ///
     /// \brief AllKeys
     /// \return
     ///
-    static QList < QUuid > AllKeys () { return mResources.keys(); }
+    static QList < QUuid > AllKeys ();
     ///
     /// \brief Load
     /// \param filename
     /// \return
     ///
-    static SharedResourceList Load ( FileDescriptor filename ) {
-        QMimeDatabase db;
-        QUuid uuidFile = UUIDManager::createUUID( filename.fullFilename );
-        if ( mLibraries.find ( uuidFile ) != mLibraries.end () )
-            return mLibraries [ uuidFile ];
-        SharedResourceList lib;
-        SharedResourceLoaderPtr loader;
-        QMimeType mimeType = db.mimeTypeForFile(filename.fullFilename);
-        if ( mResourceLoaders.find ( mimeType.name () ) != mResourceLoaders.end () )
-            loader = mResourceLoaders [ mimeType.name () ];
-        if ( ! loader.isNull() )
-            lib = loader->load(filename);
-        mLibraries[uuidFile] = lib;
-        /*
-        foreach ( SharedResourcePtr res, lib ) {
-            //res->InitializeUUID("Assets:"+filename.fullFilename+":"+res->getName());
-            mResources [ res->getUUID () ] = res;
-            mResourceDescriptors [ res->mTypeID ]->mManager->mLoadedResources [ res->getUUID() ] = res;
-        }
-        */
-        return lib;
-    }
-
-    static SharedResourcePtr FromBuffer ( const ByteBuffer& buffer, unsigned long long& index ) {
-        QUuid resTypeUUID;
-        QString resTypeName;
-        unsigned int dataSize;
-        unsigned long long lindex = index;
-        lindex = ::fromBuffer ( buffer, lindex, resTypeUUID );
-        lindex = ::fromBuffer ( buffer, lindex, resTypeName );
-        lindex = ::fromBuffer ( buffer, lindex, dataSize );
-        BaseResourceDescriptor* desc = mResourceDescriptors [ resTypeUUID ];
-        SharedResourcePtr result ( desc->Create() );
-        lindex = result->convertFromBuffer ( buffer, lindex );
-        index = lindex;
-        return result;
-    }
-    static ByteBuffer ToBuffer ( const SharedResourcePtr& res ) {
-        BaseResourceDescriptor* desc = mResourceDescriptors [ res->mTypeID ];
-        ByteBuffer uuid = toBuffer ( desc->mResourceTypeID );
-        ByteBuffer name = toBuffer ( desc->mResourceClassName );
-        ByteBuffer data = res->convertToBuffer();
-        unsigned int dataSize = data.getLength();
-        unsigned long long index = 0;
-        ByteBuffer buffer ( uuid.getLength() + name.getLength() + sizeof ( unsigned int ) + dataSize );
-        index = ::toBuffer ( buffer, index, uuid.getData(), uuid.getLength() );
-        index = ::toBuffer ( buffer, index, name.getData(), name.getLength() );
-        index = ::toBuffer ( buffer, index, dataSize );
-        index = ::toBuffer ( buffer, index, data.getData(), data.getLength() );
-        return buffer;
-    }
+    static SharedResourceList Load ( FileDescriptor filename );
+    static SharedResourcePtr FromBuffer ( const ByteBuffer& buffer, unsigned long long& index );
+    static ByteBuffer ToBuffer ( const SharedResourcePtr& res );
+    static void Export ( QString filename );
+    static void RegisterResource ( SharedResourcePtr resource );
+    static void Import ( QString filename );
 
     ///
     /// \brief Usage
     ///
-    static void Usage () {
-        std::cout << mResourceLoaders.size() << std::endl;
-        std::cout << mResourceDescriptors.size() << std::endl;
-        std::cout << mResources.size() << std::endl;
-    }
+    static void Usage ();
 protected:
     static QMap < QString, SharedResourceLoaderPtr > mResourceLoaders;
     static QMap < QUuid, BaseResourceDescriptor* > mResourceDescriptors;

@@ -71,13 +71,13 @@ bool SimpleTcpStartPoint::receive ( QUuid client, ByteBuffer& buffer )
     unsigned int lg;
     unsigned int length;
     lg = mSocket->receiveData( client, (unsigned char*) & length, sizeof ( unsigned int ) );
-    std::cout << "received buffer size : " << length << std::endl;
+    //std::cout << "received buffer size : " << length << std::endl;
     if ( lg != sizeof ( unsigned int ) ) {
         result = false;
     } else {
         buffer.reserve( length );
         lg = mSocket->receiveData ( client, buffer.getData(), buffer.getLength() );
-        std::cout << "received buffer : " << lg << std::endl;
+        //std::cout << "received buffer : " << lg << std::endl;
         if ( lg != buffer.getLength() ) {
             result = false;
         }

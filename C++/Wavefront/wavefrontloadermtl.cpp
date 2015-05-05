@@ -12,7 +12,7 @@ WavefrontLoaderMTL::~WavefrontLoaderMTL()
 }
 
 SharedResourceList WavefrontLoaderMTL::__load ( FileDescriptor filename ) {
-    std::cout << "WavefrontLoaderMTL::load(" << filename.fullFilename.toStdString() << ")" << std::endl;
+    //std::cout << "WavefrontLoaderMTL::load(" << filename.fullFilename.toStdString() << ")" << std::endl;
     SharedResourceList result;
     FileTokenizer theFile ( filename );
     QStringList m_tokens = theFile.readTokens ();

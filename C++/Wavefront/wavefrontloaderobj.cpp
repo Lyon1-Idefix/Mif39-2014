@@ -13,14 +13,15 @@ WavefrontLoaderOBJ::~WavefrontLoaderOBJ()
 
 SharedResourceList WavefrontLoaderOBJ::__load ( FileDescriptor filename ) {
     QStringList indices;
-    std::cout << "WavefrontLoaderOBJ::load(" << filename.fullFilename.toStdString() << ")" << std::endl;
+    //std::cout << "WavefrontLoaderOBJ::load(" << filename.fullFilename.toStdString() << ")" << std::endl;
     SharedResourceList result;
     SharedResourceList materialLib;
 
     FileTokenizer theFile ( filename );
 
-    Assets::MeshPtr currentObject = ResourceHolder::CreateByName ( "Mesh", filename.fileBasename ).dynamicCast < Assets::Mesh > ();
-    currentObject->set < QString > ( "_RealName", filename.fileBasename );
+    Assets::MeshPtr currentObject;
+    //= ResourceHolder::CreateByName ( "Mesh", filename.fileBasename ).dynamicCast < Assets::Mesh > ();
+    //currentObject->set < QString > ( "_RealName", filename.fileBasename );
     //( new Assets::Mesh ( theFile.mDescriptor.fileBasename ) );
     Assets::MaterialGroup* currentMaterial = NULL;
 
